@@ -4,11 +4,14 @@
         <title>Vector field</title>
     </head>
     <body>
+        <p>Mouse click/drag adds movers. Refresh for new flow field.</p>
         <canvas id="myCanvas" resize keepalive="true" style="width: 500px; height: 400px; border: 1px solid gray; background: black;"></canvas>
 
         <script type="text/javascript" src="perlin.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src="paper-full.js"></script>
+        <script type="text/paperscript" canvas="myCanvas" src="Mover.js"></script>
+        <script type="text/paperscript" canvas="myCanvas" src="functions.js"></script>
         <script type="text/paperscript" canvas="myCanvas" src="custom.js"></script>
     </body>
 </html>
