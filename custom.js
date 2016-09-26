@@ -59,7 +59,10 @@ function onMouseDown(event){
 }
 
 function onMouseDrag(event){
-    console.log(event)
-    var mover = new Mover(event.point);
+    var point = event.point;
+    if (point.x > width || point.x < 0 || point.y < 0 || point.y > height){
+        return;
+    }
+    var mover = new Mover(point);
     active_movers.push(mover)
 }
