@@ -5,7 +5,12 @@
     </head>
     <body>
         <p>Mouse click/drag adds movers. Refresh for new flow field.</p>
-        <canvas id="myCanvas" resize keepalive="true" style="width: 500px; height: 400px; border: 1px solid gray; background: black;"></canvas>
+        <p>Seed is: <input type="text" id="seed" /> <button id="use_new">Set</button> <button id="randomize">Randomize</button></p>
+        <p>
+            <button id="clear_movers">Clear movers</button> | <button id="show_field">Show field</button> | <button id="hide_field">Hide field</button>
+        </p>
+
+        <canvas id="myCanvas" resize keepalive="true" style="width: 600px; height: 600px; border: 1px solid gray; background: black;"></canvas>
 
         <script type="text/javascript" src="perlin.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
