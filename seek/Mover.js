@@ -4,11 +4,11 @@ window.Mover = function(point){
     this.velocity = new Point(0, 0);
 
     this.max_velocity = 5;
+    this.angle = 0;
 
-    this.shape = new Path.Circle({
-        center: this.position,
-        radius: 5,
-        fillColor: 'red'
+    this.shape = new Path({
+        segments: [[-5, -5], [-5, 5], [10, 0]],
+        strokeColor: 'red'
     })
 
     this.applyForce = function(force){
@@ -38,6 +38,10 @@ window.Mover = function(point){
             this.shape.fillColor = 'red';
             steering = target_offset;
         }
+
+        var delta_angle = this.angle - target_offset.angle;
+        this.shape.rotate(-delta_angle);
+        this.angle = target_offset.angle;
 
 
         this.applyForce(steering);

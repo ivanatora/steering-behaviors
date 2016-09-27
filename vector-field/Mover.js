@@ -1,9 +1,10 @@
 window.Mover = function(point){
     this.position = point;
 
-    this.shape = new Path.Circle({
-        center: this.position,
-        radius: 5,
+    this.angle = 0;
+
+    this.shape = new Path({
+        segments: [[-5, -5], [-5, 5], [10, 0]],
         fillColor: 'red'
     })
 
@@ -20,6 +21,10 @@ window.Mover = function(point){
             flee_vector.length = 10;
             force = force.subtract(flee_vector);
         }
+
+        var delta_angle = this.angle - force.angle;
+        this.shape.rotate(-delta_angle);
+        this.angle = force.angle;
 
         // for (var i = 0; i < active_movers.length; i++){
         //     if (active_movers[i] == this) continue;
