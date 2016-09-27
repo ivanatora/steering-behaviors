@@ -1,7 +1,7 @@
 width = view.size.width;
 height = view.size.height;
 frame_every = 2;
-w = 20;
+w = 10;
 grid = [];
 active_movers = [];
 arrow_shapes = [];
