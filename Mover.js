@@ -15,6 +15,12 @@ window.Mover = function(point){
         var force = new Point(10, 0);
         force = force.rotate(degrees(angle));
 
+        if (mouse_position && mouse_position.getDistance(this.position) < 50){
+            var flee_vector = mouse_position.subtract(this.position);
+            flee_vector.length = 10;
+            force = force.subtract(flee_vector);
+        }
+
         this.position = this.position + force;
 
         this.constrainScreen();

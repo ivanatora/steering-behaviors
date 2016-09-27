@@ -1,11 +1,12 @@
 width = view.size.width;
 height = view.size.height;
-frame_every = 1;
+frame_every = 2;
 w = 20;
 grid = [];
 active_movers = [];
 arrow_shapes = [];
 arrows_visible = false;
+mouse_position = null;
 
 
 run = true;
@@ -68,6 +69,10 @@ function onMouseDrag(event){
     }
     var mover = new Mover(point);
     active_movers.push(mover)
+}
+
+function onMouseMove(event){
+    mouse_position = event.point;
 }
 
 $(document).ready(function(){
