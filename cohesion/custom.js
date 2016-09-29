@@ -46,6 +46,20 @@ $(document).ready(function(){
         var y = Math.floor(Math.random() * height);
         var mover = new Mover(new Point(x, y));
         active_movers.push(mover)
+
+        $('#current-number').html(active_movers.length);
+    })
+
+    $('#btn-add').click(function(e){
+        e.preventDefault();
+        var cnt = $('#fld-add').val();
+        for (var i = 0; i < cnt; i++){
+            var x = Math.floor(Math.random() * width);
+            var y = Math.floor(Math.random() * height);
+            var mover = new Mover(new Point(x, y));
+            active_movers.push(mover)
+        }
+        $('#current-number').html(active_movers.length);
     })
 
     $('#play').click(function(e){
