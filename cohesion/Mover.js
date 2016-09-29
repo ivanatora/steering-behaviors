@@ -25,7 +25,7 @@ window.Mover = function(point){
         for (var i = 0; i < active_movers.length; i++){
             if (active_movers[i] == this) continue;
             var distance = active_movers[i].position.getDistance(this.position);
-            if (distance < close_distance){
+            if (distance < close_distance && distance > too_close_distance){
                 local_center.x += active_movers[i].position.x;
                 local_center.y += active_movers[i].position.y;
                 cnt_local_movers++;
@@ -36,20 +36,15 @@ window.Mover = function(point){
         if (cnt_local_movers > 0){ // seek local center
             local_center.x = Math.floor(local_center.x / cnt_local_movers);
             local_center.y = Math.floor(local_center.y / cnt_local_movers);
-            console.log('local_center', local_center)
+            // console.log('local_center', local_center)
 
-            target = local_center;
+            target = local_center - this.position;
         }
         else { // random movement
             target = new Point(0, 10);
-            // console.log(target)
             var rand_angle = Math.random() * 360;
             target = target.rotate(rand_angle);
-            target = this.position + target;
-            target = target - this.position;
         }
-
-
 
 
         var delta_angle = this.angle - target.angle;

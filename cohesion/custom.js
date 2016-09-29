@@ -5,6 +5,7 @@ frame_every = 2;
 active_movers = [];
 
 close_distance = 100;
+too_close_distance = 50;
 
 run = true;
 
@@ -45,5 +46,15 @@ $(document).ready(function(){
         var y = Math.floor(Math.random() * height);
         var mover = new Mover(new Point(x, y));
         active_movers.push(mover)
+    })
+
+    $('#play').click(function(e){
+        e.preventDefault();
+        run = true;
+    })
+
+    $('#pause').click(function(e){
+        e.preventDefault();
+        run = false;
     })
 })
