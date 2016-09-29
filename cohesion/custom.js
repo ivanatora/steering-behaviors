@@ -24,7 +24,9 @@ function onFrame(event) {
 
 function onMouseDown(event){
     var mover = new Mover(event.point);
-    active_movers.push(mover)
+    active_movers.push(mover);
+
+    $('#current-number').html(active_movers.length);
 }
 
 function onMouseDrag(event){
@@ -33,7 +35,9 @@ function onMouseDrag(event){
         return;
     }
     var mover = new Mover(point);
-    active_movers.push(mover)
+    active_movers.push(mover);
+
+    $('#current-number').html(active_movers.length);
 }
 
 $(document).ready(function(){
@@ -45,7 +49,7 @@ $(document).ready(function(){
         var x = Math.floor(Math.random() * width);
         var y = Math.floor(Math.random() * height);
         var mover = new Mover(new Point(x, y));
-        active_movers.push(mover)
+        active_movers.push(mover);
 
         $('#current-number').html(active_movers.length);
     })
@@ -57,7 +61,7 @@ $(document).ready(function(){
             var x = Math.floor(Math.random() * width);
             var y = Math.floor(Math.random() * height);
             var mover = new Mover(new Point(x, y));
-            active_movers.push(mover)
+            active_movers.push(mover);
         }
         $('#current-number').html(active_movers.length);
     })
