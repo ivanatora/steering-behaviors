@@ -26,17 +26,6 @@ window.Mover = function(point){
         this.shape.rotate(-delta_angle);
         this.angle = force.angle;
 
-        // for (var i = 0; i < active_movers.length; i++){
-        //     if (active_movers[i] == this) continue;
-        //
-        //     var dist = this.position.getDistance(active_movers[i].position);
-        //     if (dist < 10){
-        //         var flee_vector = active_movers[i].position.subtract(this.position);
-        //         flee_vector.length = 20;
-        //         force = force.subtract(flee_vector);
-        //     }
-        // }
-
         this.position = this.position + force;
 
         this.constrainScreen();

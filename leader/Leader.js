@@ -1,17 +1,17 @@
-window.Mover = function(point){
+window.Leader = function(point){
     this.position = point;
     this.acceleration = new Point(0, 0);
     this.velocity = new Point(0, 0);
+
+    this.max_velocity = 3;
+    this.angle = 0;
     this.target = null;
 
-    this.max_velocity = 5;
-    this.angle = 0;
-    this.max_steer_angle = 20;
-
     this.shape = new Path({
-        segments: [[-5, -5], [-5, 5], [10, 0]],
-        fillColor: 'red'
+        segments: [[-7, -7], [-7, 7], [14, 0]],
+        fillColor: 'green'
     })
+
 
     this.applyForce = function(force){
         this.acceleration = this.acceleration + force;
@@ -27,26 +27,23 @@ window.Mover = function(point){
 
         desired_velocity = this.target - this.position;
 
-        // observe the local neighboors
+        // observe the local neighboors, if any leaders found, flee from them
         var local_velocity = new Point(0, 0);
         var cnt_local_movers = 0;
 
-        for (var i = 0; i < active_movers.length; i++){
-            if (active_movers[i] == this) continue;
-            var distance = active_movers[i].position.getDistance(this.position);
+        for (var i = 0; i < active_leaders.length; i++){
+            if (active_leaders[i] == this) continue;
+            var distance = active_leaders[i].position.getDistance(this.position);
             if (distance < close_distance){
-                local_velocity.x += active_movers[i].position.x;
-                local_velocity.y += active_movers[i].position.y;
-                cnt_local_movers++;
+                desired_velocity = this.position - active_leaders[i].position;
+
+                // re-assign new target to prevent constant bumping into each other
+                var x = Math.floor(Math.random() * width);
+                var y = Math.floor(Math.random() * height);
+                this.target = new Point(x, y);
             }
         }
 
-        if (cnt_local_movers > 0){ // seek local center
-            local_velocity.x = Math.floor(local_velocity.x / cnt_local_movers);
-            local_velocity.y = Math.floor(local_velocity.y / cnt_local_movers);
-
-            desired_velocity = local_velocity;
-        }
 
 
         var delta_angle = this.angle - desired_velocity.angle;
