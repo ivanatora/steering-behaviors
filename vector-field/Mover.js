@@ -1,6 +1,8 @@
 window.Mover = function(point){
     this.position = point;
-    this.last_force = new Point(0, 0);
+    this.acceleration = new Point(0, 0);
+    this.velocity = new Point(0, 0);
+    this.max_velocity = 5;
 
     this.angle = 0;
 
@@ -9,6 +11,9 @@ window.Mover = function(point){
         fillColor: 'red'
     })
 
+    this.applyForce = function(force){
+        this.acceleration = this.acceleration + force;
+    }
 
     this.update = function(){
         var i = Math.floor(this.position.x / w);
@@ -16,14 +21,6 @@ window.Mover = function(point){
         var angle = map_range(grid[i][j], 0, 1, Math.PI, -Math.PI);
         var force = new Point(10, 0);
         force = force.rotate(degrees(angle));
-
-        this.last_force = force;
-
-        // if (mouse_position && mouse_position.getDistance(this.position) < 50){
-        //     var flee_vector = mouse_position.subtract(this.position);
-        //     flee_vector.length = 10;
-        //     force = force.subtract(flee_vector);
-        // }
 
         if (repulsion_enabled) {
             // lets put small repulsive force between movers
@@ -33,16 +30,16 @@ window.Mover = function(point){
                 if (active_movers[i] == this) continue;
                 var dist = this.position.getDistance(active_movers[i].position);
                 if (dist < swarm_closest_distance) {
-                    repuslive_force.x += active_movers[i].last_force.x;
-                    repuslive_force.y += active_movers[i].last_force.y;
+                    repuslive_force.x += active_movers[i].velocity.x;
+                    repuslive_force.y += active_movers[i].velocity.y;
                     cnt_swarm++;
                 }
             }
             if (cnt_swarm > 0) {
                 repuslive_force.x /= cnt_swarm;
                 repuslive_force.y /= cnt_swarm;
-                repuslive_force.length = -30;
-                force = force.add(repuslive_force);
+                repuslive_force.length = -10;
+                this.applyForce(repuslive_force)
             }
         }
 
@@ -50,7 +47,16 @@ window.Mover = function(point){
         this.shape.rotate(-delta_angle);
         this.angle = force.angle;
 
-        this.position = this.position + force;
+        this.applyForce(force);
+
+        // this.position = this.position + force;
+
+        this.velocity = this.velocity + this.acceleration;
+        if (this.velocity.length > this.max_velocity){
+            this.velocity.length = this.max_velocity;
+        }
+        this.acceleration.length = 0;
+        this.position = this.position + this.velocity;
 
         this.constrainScreen();
         this.shape.position = this.position;

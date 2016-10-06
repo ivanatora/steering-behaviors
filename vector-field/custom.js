@@ -1,7 +1,7 @@
 width = view.size.width;
 height = view.size.height;
 frame_every = 2;
-swarm_closest_distance = 30;
+swarm_closest_distance = 50;
 w = 10;
 grid = [];
 active_movers = [];
@@ -129,6 +129,5 @@ $(document).ready(function(){
         else {
             $(this).html('Repulsion: OFF');
         }
-        console.log('repulsion set to', repulsion_enabled)
     })
 })
