@@ -8,6 +8,7 @@ active_movers = [];
 arrow_shapes = [];
 arrows_visible = false;
 mouse_position = null;
+repulsion_enabled = false;
 
 
 run = true;
@@ -116,5 +117,18 @@ $(document).ready(function(){
             arrow_shapes[i].visible = false;
         }
         arrows_visible = false;
+    })
+
+    $('#toggle_repulsion').click(function(e){
+        e.preventDefault();
+        repulsion_enabled = ! repulsion_enabled;
+
+        if (repulsion_enabled){
+            $(this).html('Repulsion: ON');
+        }
+        else {
+            $(this).html('Repulsion: OFF');
+        }
+        console.log('repulsion set to', repulsion_enabled)
     })
 })

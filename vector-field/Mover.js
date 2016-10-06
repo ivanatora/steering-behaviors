@@ -1,5 +1,6 @@
 window.Mover = function(point){
     this.position = point;
+    this.last_force = new Point(0, 0);
 
     this.angle = 0;
 
@@ -16,29 +17,33 @@ window.Mover = function(point){
         var force = new Point(10, 0);
         force = force.rotate(degrees(angle));
 
-        if (mouse_position && mouse_position.getDistance(this.position) < 50){
-            var flee_vector = mouse_position.subtract(this.position);
-            flee_vector.length = 10;
-            force = force.subtract(flee_vector);
-        }
-        
-        // lets put small repulsive force between movers
-        var repuslive_force = new Point(0, 0);
-        var cnt_swarm = 0;
-        for (var i = 0; i < active_movers.length; i++){
-            if (active_movers[i] == this) continue;
-            var dist = this.position.getDistance(active_movers[i].position);
-            if (dist < swarm_closest_distance){
-                repuslive_force.x += active_movers[i].velocity.x;
-                repuslive_force.y += active_movers[i].velocity.y;
-                cnt_swarm++;
+        this.last_force = force;
+
+        // if (mouse_position && mouse_position.getDistance(this.position) < 50){
+        //     var flee_vector = mouse_position.subtract(this.position);
+        //     flee_vector.length = 10;
+        //     force = force.subtract(flee_vector);
+        // }
+
+        if (repulsion_enabled) {
+            // lets put small repulsive force between movers
+            var repuslive_force = new Point(0, 0);
+            var cnt_swarm = 0;
+            for (var i = 0; i < active_movers.length; i++) {
+                if (active_movers[i] == this) continue;
+                var dist = this.position.getDistance(active_movers[i].position);
+                if (dist < swarm_closest_distance) {
+                    repuslive_force.x += active_movers[i].last_force.x;
+                    repuslive_force.y += active_movers[i].last_force.y;
+                    cnt_swarm++;
+                }
             }
-        }
-        if (cnt_swarm > 0){
-            repuslive_force.x /= cnt_swarm;
-            repuslive_force.y /= cnt_swarm;
-            repuslive_force.length = -30;
-            force = force.аdd(repuslive_force);
+            if (cnt_swarm > 0) {
+                repuslive_force.x /= cnt_swarm;
+                repuslive_force.y /= cnt_swarm;
+                repuslive_force.length = -30;
+                force = force.add(repuslive_force);
+            }
         }
 
         var delta_angle = this.angle - force.angle;
