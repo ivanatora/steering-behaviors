@@ -77,15 +77,16 @@ window.Mover = function(point){
             if (active_movers[i] == this) continue;
             var dist = this.position.getDistance(active_movers[i].position);
             if (dist < swarm_closest_distance){
-                repuslive_force.x += active_movers[i].velocity.x;
-                repuslive_force.y += active_movers[i].velocity.y;
+                repuslive_force.x += active_movers[i].position.x;
+                repuslive_force.y += active_movers[i].position.y;
                 cnt_swarm++;
             }
         }
         if (cnt_swarm > 0){
             repuslive_force.x /= cnt_swarm;
             repuslive_force.y /= cnt_swarm;
-            repuslive_force.length = -30;
+            // repuslive_force.length = -30;
+            repuslive_force = this.position - repuslive_force;
             this.applyForce(repuslive_force);
         }
 

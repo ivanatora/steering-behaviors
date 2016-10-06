@@ -1,7 +1,7 @@
 width = view.size.width;
 height = view.size.height;
 frame_every = 2;
-swarm_closest_distance = 50;
+swarm_closest_distance = 30;
 w = 10;
 grid = [];
 active_movers = [];
