@@ -21,6 +21,25 @@ window.Mover = function(point){
             flee_vector.length = 10;
             force = force.subtract(flee_vector);
         }
+        
+        // lets put small repulsive force between movers
+        var repuslive_force = new Point(0, 0);
+        var cnt_swarm = 0;
+        for (var i = 0; i < active_movers.length; i++){
+            if (active_movers[i] == this) continue;
+            var dist = this.position.getDistance(active_movers[i].position);
+            if (dist < swarm_closest_distance){
+                repuslive_force.x += active_movers[i].velocity.x;
+                repuslive_force.y += active_movers[i].velocity.y;
+                cnt_swarm++;
+            }
+        }
+        if (cnt_swarm > 0){
+            repuslive_force.x /= cnt_swarm;
+            repuslive_force.y /= cnt_swarm;
+            repuslive_force.length = -30;
+            force = force.аdd(repuslive_force);
+        }
 
         var delta_angle = this.angle - force.angle;
         this.shape.rotate(-delta_angle);
