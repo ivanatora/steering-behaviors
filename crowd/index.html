@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Crowd</title>
+    </head>
+    <body>
+        <p>Mouse click/drag adds movers.</p>
+        <p>
+            Current number of movers: <span id="current-number-movers"></span><br />
+        </p>
+        <p>
+            <button id="new">New mover</button>
+        </p>
+        <p>
+            <button id="play">Play</button> |
+            <button id="pause">Pause</button>
+        </p>
+
+        <canvas id="myCanvas" resize keepalive="true" style="width: 600px; height: 600px; border: 1px solid gray; background: black;"></canvas>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+        <script type="text/javascript" src="../assets/paper-full.js"></script>
+        <script type="text/paperscript" canvas="myCanvas" src="Mover.js"></script>
+        <script type="text/paperscript" canvas="myCanvas" src="../assets/functions.js"></script>
+        <script type="text/paperscript" canvas="myCanvas" src="custom.js"></script>
+    </body>
+</html>
